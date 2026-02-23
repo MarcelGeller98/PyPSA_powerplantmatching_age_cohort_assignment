@@ -729,10 +729,10 @@ if plot == True:
     excel_export_final = True
     if excel_export_final == True:
         #rename columns to fit RECC classifications
-        df_stock.rename(columns= {"Region":"SSP_Regions_32","Technology":"Sectors_Industry"}, inplace=True)
+        df_stock.rename(columns= {"Region":"SSP_Regions_32","Technology":"Sectors_Industry", "Cohort_share_pct": f"Cohort_share_{target_year}"}, inplace=True)
         outpath_excel = f"3_SHA_RECC_Industry_AgeCohortDistribution_Stock{target_year}_{date}.xlsx"
         outpath_csv = f"3_SHA_RECC_Industry_AgeCohortDistribution_Stock{target_year}_{date}.csv"
         # export to Excel and CSV
         df_stock.to_excel(outpath_excel, index=False)
-        df_stock.to_csv(outpath_csv, index=False)
+        #df_stock.to_csv(outpath_csv, index=False)
         print(f"\n✅ Exported voth files with {len(df_stock)} rows to:\n  {os.path.abspath(outpath_excel)}\n  {os.path.abspath(outpath_csv)}")
