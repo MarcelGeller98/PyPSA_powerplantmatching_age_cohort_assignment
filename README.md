@@ -1,3 +1,12 @@
+**This repo builds upon the powerplantmatching repo from the PyPSA community and processes the PyPSA powerplantmatching dataset (powerplants.csv via PyPSA_processing.py) and uses an inflow-driven model to determining the age cohort composition of the EU power plant stock on a single country and granular technology level for a desired target year (via age_cohort_assignment_via_inflow_driven_model.py).**
+
+**Why an inflow-driven cohort survival model rather than direct capacity accounting?**
+While the PyPSA dataset contains explicit decommissioning records compiled from real-world statistics, we opt for an inflow-driven stock model combined with a lognormal lifetime distribution rather than simply reading the surviving fleet directly from the data. The primary motivation is that decommissioning records in aggregated statistical databases are systematically less complete and less reliable than installation records. Capacity additions are typically well-documented at the time of commissioning, whereas retirements are often recorded with a delay, omitted entirely for older plants that were quietly phased out, or inconsistently captured across different national statistics that feed into the database. This asymmetry means that the surviving fleet inferred directly from the data tends to be biased toward older cohorts that should have been retired but lack a recorded decommissioning date.
+The inflow-driven approach instead takes only the capacity addition time series as input and applies a lognormal lifetime distribution to estimate the probability that a unit installed in year t is still operational by the reference year. This separates the more reliable empirical signal — when capacity was built — from the less reliable one — when it was retired — and replaces the latter with a physically motivated distributional assumption. The lognormal distribution is a standard choice for component lifetimes as it is right-skewed, strictly positive, and well-supported in the industrial ecology and material flow analysis literature for energy infrastructure. The resulting age distribution is therefore expected to be more robust to the known data quality asymmetry between installations and retirements in historical plant-level statistics.
+
+
+
+
 <!--
 SPDX-FileCopyrightText: Contributors to powerplantmatching <https://github.com/pypsa/powerplantmatching>
 
